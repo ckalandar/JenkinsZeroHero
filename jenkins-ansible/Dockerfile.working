@@ -1,0 +1,15 @@
+FROM jenkins/jenkins
+USER root
+RUN apt-get update
+RUN apt-get install wget -y
+RUN apt-get install python3 python3-pip -y
+USER jenkins
+RUN pip install ansible --user
+COPY plugins.txt /usr/share/jenkins/ref/
+COPY default-user.groovy /usr/share/jenkins/ref/init.groovy.d/
+COPY "bashrc" /var/jenkins_home/
+RUN mv /var/jenkins_home/bashrc /var/jenkins_home/.bashrc
+USER root
+RUN wget https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.10.0/jenkins-plugin-manager-2.10.0.jar
+RUN java -jar jenkins-plugin-manager-2.10.0.jar -f /usr/share/jenkins/ref/plugins.txt
+USER jenkins

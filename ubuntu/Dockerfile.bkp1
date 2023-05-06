@@ -1,0 +1,9 @@
+FROM ubuntu:22.04  
+MAINTAINER "Hiroki Takeyama"
+
+ENV TZ Asia/Tokyo
+
+ENV ROOT_PASSWORD root
+
+EXPOSE 22
+
